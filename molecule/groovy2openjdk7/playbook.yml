@@ -1,0 +1,28 @@
+---
+- name: Converge
+  hosts: all
+
+  roles:
+   - role: jetune.java
+     vars:
+      from_repo: false
+      implementation: OPENJDK
+      v_major: 7
+      v_minor: 75
+      build: 13
+      os: linux
+      arch: x64
+      date: 18_dec_2014
+      checksum: md5:538acd35c6cf6977fa19d21ab2c17b0a
+      alternative_priority: 300
+      is_default: true
+
+   - role: ansible-role-groovy
+     vars:
+      groovy_version: "2.5.9"
+      groovy_is_default: true
+      groovy_sdk: true
+      groovy_user: "root"
+      groovy_group: "root"
+      groovy_install_parent_dir: "/opt/groovy/"
+      groovy_extras_lib: "/var/lib/groovy"

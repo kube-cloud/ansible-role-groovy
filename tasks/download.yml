@@ -1,0 +1,6 @@
+---
+
+- name: ({{ ansible_distribution }}) Download Groovy Archive ( URL = {{ groovy_downloaded_file }}, DEST = {{ downloaded_file }})
+  get_url:
+   url: "{{ groovy_url }}"
+   dest: "{{ groovy_downloaded_file }}"

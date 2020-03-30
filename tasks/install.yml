@@ -1,0 +1,45 @@
+---
+
+- name: ({{ ansible_distribution }}) Create installation directories
+  file:
+   path: "{{ _groovy_install_parent_dir }}"
+   state: directory
+
+- name: ({{ ansible_distribution }}) Unarchive Downloaded groovy archives
+  unarchive:
+   src: "{{ groovy_downloaded_file }}"
+   dest: "{{ _groovy_install_parent_dir }}"
+   creates: "{{ _groovy_install_dir }}/bin/groovy"
+   remote_src: true
+
+- name: ({{ ansible_distribution }}) Set execution right to script files
+  file:
+   dest: "{{ _groovy_install_dir }}/bin/{{ item }}"
+   mode: "{{ groovy_commands_mode }}"
+  with_items: "{{ groovy_commands }}"
+
+- name: ({{ ansible_distribution }}) Set the Groovy bin commands links in /usr/bin/
+  file:
+   src: "{{ _groovy_install_dir }}/bin/{{ item }}"
+   dest: "/usr/bin/{{ item }}"
+   state: link
+   mode: a+x
+  with_items: "{{ groovy_commands }}"
+  when:
+   - groovy_is_default
+
+- name: ({{ ansible_distribution }}) Make sure {{ groovy_extras_lib }} extra lib directory exists
+  file:
+   path: "{{ groovy_extras_lib }}"
+   mode: "{{ groovy_commands_mode }}"
+   state: directory
+   owner: "{{ groovy_user }}"
+   group: "{{ groovy_group }}"
+
+- name: ({{ ansible_distribution }}) Generate Groovy Settings
+  template:
+   src: "templates/groovy-starter.conf.j2"
+   dest: "{{ _groovy_install_dir }}/conf//groovy-starter.conf"
+   mode: "{{ groovy_commands_mode }}"
+   owner: "{{ groovy_user }}"
+   group: "{{ groovy_group }}"

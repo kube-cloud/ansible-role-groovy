@@ -1,0 +1,6 @@
+---
+
+- name: "Define commons facts for roles"
+  set_fact:
+    _groovy_install_parent_dir: "{{ groovy_install_parent_dir | regex_replace('\\/$', '') }}"
+    _groovy_install_dir: "{{ groovy_install_parent_dir | regex_replace('\\/$', '') }}/groovy-{{ groovy_version }}"
