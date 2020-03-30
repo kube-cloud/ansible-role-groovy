@@ -48,33 +48,15 @@ Ansible role used to install Groovy on Linux based Operating System.
       alternative_priority: 300
       is_default: true
 
-   - role: jetune.groovy
+   - role: ansible-role-groovy
      vars:
-      groovy_version: 3
+      groovy_version: "3.0.2"
       groovy_is_default: true
-      groovy_settings_directory: "~/.m2/"
-      groovy_local_repository: "/opt/groovy/repository"
-      groovy_proxies:
-       - id: "cntlm_groovy_proxy"
-         active: true
-         protocol: "http"
-         username: "jetune"
-         password: "mypassword"
-         host: "localhost"
-         port: 3286
-         exclusions: "localhost|127.0.0.1|some.other.host"
-      groovy_servers:
-       - id: "sonatype-nexus"
-         username: "admin"
-         password: "admin"
-       - id: "bitbucket"
-         privateKey: "/opt/security/key"
-         passphrase: "p@ssw0rd"
-      groovy_mirrors:
-       - id: "mirror-central"
-         name: "Central groovy repository mirror"
-         target: "central"
-         url: "https://artifact.lab.kube-cloud.be/repository/groovy-central/"
+      groovy_sdk: true
+      groovy_user: "root"
+      groovy_group: "root"
+      groovy_install_parent_dir: "/opt/groovy/"
+      groovy_extras_lib: "/var/lib/groovy"
 
 ```
 
